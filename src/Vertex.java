@@ -1,26 +1,35 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class Vertex<V> {
     private V data;
-    private Map<Vertex<V>, Double> adjacentVertices  = new HashMap<>();
+    private Map<V, Double> adjacentVertices  = new HashMap<>();
 
     public Vertex(V data) {
         this.data = data;
     }
 
-    public void insertVertex(Vertex<V> vertex, double weight) {
+    public void insertVertex(V vertex, double weight) {
         adjacentVertices.put(vertex, weight);
+    }
+
+    public Double getWeight(V vertex) {
+        return adjacentVertices.get(vertex);
     }
 
     public int sizeAdj() {
         return adjacentVertices.size();
     }
 
-    public boolean isVertex(Vertex<V> vertex) {
+    public boolean isVertex(V vertex) {
         return adjacentVertices.containsKey(vertex);
+    }
+
+    public Iterable<V> getAdj() {
+        LinkedList<V> vertices = new LinkedList<>();
+        for(V v: adjacentVertices.keySet()){
+            vertices.addFirst(v);
+        }
+        return vertices;
     }
 
     public void setData(V data) {

@@ -2,7 +2,7 @@ import java.util.*;
 
 public class MyWeightedGraph<T> {
     private boolean undirected;
-    private Map<Vertex<T>, Vertex<T>> connect = new HashMap<>();
+    private Map<T, Vertex<T>> connect = new HashMap<>();
 //    private Set<Vertex<T>> map = new HashSet<>();
 
     public MyWeightedGraph() {
@@ -13,11 +13,15 @@ public class MyWeightedGraph<T> {
         this.undirected = undirected;
     }
 
-    public void addVertex(Vertex<T> v) {
-        connect.put(v, new Vertex<T>(v.getSource()));
+    public void addVertex(T v) {
+        connect.put(v, new Vertex<>(v));
     }
 
-    public void addEdge(Vertex<T> source, Vertex<T> dest, double weight) {
+    public Vertex<T> getVertex(T info) {
+        return connect.get(info);
+    }
+
+    public void addEdge(T source, T dest, double weight) {
         if (!hasVertex(source))
             addVertex(source);
 
@@ -39,8 +43,12 @@ public class MyWeightedGraph<T> {
 
     public int getEdgesCount() {
         int count = 0;
-        for (Vertex<T> v : connect.keySet()) {
-            count += connect.get(v).sizeAdj();
+//        for (Vertex<T> v : connect.keySet()) {
+//            count += connect.get(v).sizeAdj();
+//        }
+
+        for (int i=0;i<getVerticesCount();i++) {
+            count+= connect.get(i).sizeAdj();
         }
 
         if (undirected)
@@ -50,18 +58,24 @@ public class MyWeightedGraph<T> {
     }
 
 
-    public boolean hasVertex(Vertex<T> v) {
+    public boolean hasVertex(T v) {
         return connect.containsKey(v);
     }
 
-    public boolean hasEdge(Vertex<T> source, Vertex<T> dest) {
+    public boolean hasEdge(T source, T dest) {
         if (!hasVertex(source)) return false;
         return connect.get(source).isVertex(dest);
 //        return connect.get(source).containsValue(dest);
 //        return map.get(source).contains(new Edge<>(source, dest));
     }
 
-    public Iterable<Vertex<T>> getEdges(Vertex<T> v) {
+    public Iterable<T> adjacencyList(T v) {
+        if (!hasVertex(v)) return null;
+        Vertex<T> vertex = connect.get(v);
+        return vertex.getAdj();
+    }
+
+    public Iterable<Vertex<T>> getEdges(T v) {
         if (!hasVertex(v)) return null;
         return (Iterable<Vertex<T>>) connect.get(v);
     }
