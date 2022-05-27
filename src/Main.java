@@ -1,6 +1,6 @@
 public class Main {
     public static void main(String[] args) {
-        WeightedGraph<String> graph = new WeightedGraph<>(true);
+        MyWeightedGraph<String> graph = new MyWeightedGraph<>(true);
 
         graph.addEdge("Almaty", "Astana", 2.1);
         graph.addEdge("Almaty", "Shymkent", 7.2);
@@ -8,9 +8,9 @@ public class Main {
         graph.addEdge("Astana", "Kostanay", 3.5);
         graph.addEdge("Shymkent", "Kyzylorda", 5.4);
 
-        System.out.println("Dijkstra:");
-        Search<String> djk = new DijkstraSearch<>(graph, "Almaty");
-        outputPath(djk, "Kyzylorda");
+//        System.out.println("Dijkstra:");
+//        MySearch<String> djk = new MyDijkstraSearch<>(graph, "Almaty");
+//        outputPath(djk, "Kyzylorda");
 
 //        System.out.println("DFS:");
 //        Search<String> dfs = new DepthFirstSearch<>(graph, "Almaty");
@@ -23,7 +23,7 @@ public class Main {
 //        outputPath(bfs, "Kyzylorda");
     }
 
-    public static void outputPath(Search<String> search, String key) {
+    public static void outputPath(MySearch<String> search, String key) {
         for (String v : search.pathTo(key)) {
             System.out.print(v + " -> ");
         }
